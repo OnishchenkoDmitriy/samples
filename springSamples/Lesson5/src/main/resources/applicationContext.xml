@@ -4,9 +4,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id = "t1000" class="org.training.impl.robot.ModelT1000">
-        <constructor-arg ref="sonyHand"/>
+        <!--<constructor-arg ref="sonyHand"/>
         <constructor-arg ref="sonyLeg"/>
-        <constructor-arg ref="sonyHead"/>
+        <constructor-arg ref="sonyHead"/>-->
+
+        <property name="hand" ref="toshibaHand"/>
+        <property name="leg" ref="toshibaLeg"/>
+        <property name="head" ref="toshibaHead"/>
     </bean>
 
     <bean id = "sonyHand" class="org.training.impl.sony.SonyHand"/>
