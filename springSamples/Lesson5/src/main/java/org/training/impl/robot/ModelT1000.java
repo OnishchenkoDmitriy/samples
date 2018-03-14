@@ -1,4 +1,4 @@
-package org.training.impls.robot;
+package org.training.impl.robot;
 
 import org.training.interfaces.Hand;
 import org.training.interfaces.Head;

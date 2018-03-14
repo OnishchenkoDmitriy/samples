@@ -1,4 +1,4 @@
-package org.training.impls.toshiba;
+package org.training.impl.toshiba;
 
 import org.training.interfaces.Hand;
 

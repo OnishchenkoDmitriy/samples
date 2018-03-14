@@ -1,4 +1,4 @@
-package org.training.impls.sony;
+package org.training.impl.sony;
 
 import org.training.interfaces.Leg;
 
