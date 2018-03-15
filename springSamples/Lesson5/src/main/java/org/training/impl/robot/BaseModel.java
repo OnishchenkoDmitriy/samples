@@ -1,5 +1,8 @@
 package org.training.impl.robot;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Required;
 import org.training.interfaces.Hand;
 import org.training.interfaces.Head;
 import org.training.interfaces.Leg;
@@ -7,8 +10,14 @@ import org.training.interfaces.Robot;
 
 public abstract class BaseModel implements Robot {
 
+    @Autowired
+    @Qualifier("sonyHand")
     private Hand hand;
+    @Autowired
+    @Qualifier("sonyLeg")
     private Leg leg;
+    @Autowired
+    @Qualifier("sonyHead")
     private Head head;
 
     public BaseModel() {

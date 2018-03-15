@@ -26,7 +26,7 @@ public class T1000Pool implements RobotPool {
         return robotCollection;
     }
 
-    public void action(){
+    public void beginShow(){
         robotCollection.forEach((key, value) -> {
             System.out.println(key);
             value.action();

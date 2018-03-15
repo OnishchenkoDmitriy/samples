@@ -6,6 +6,7 @@ import org.training.interfaces.Leg;
 
 public class ModelT1000 extends BaseModel{
 
+
     private String color;
     private int year;
     private boolean soundEnabled;
