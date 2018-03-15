@@ -6,9 +6,11 @@
 
     <import resource="sony_context.xml"/>
     <import resource="toshiba_context.xml"/>
+    <import resource="db_context.xml"/>
 
     <bean id="t1000" class="org.training.impl.robot.ModelT1000"
-    p:hand-ref="toshibaHand" p:leg-ref="toshibaLeg" p:head-ref="sonyHead">
+    p:hand-ref="toshibaHand" p:leg-ref="toshibaLeg" p:head-ref="sonyHead"
+    depends-on="dataBaseBean">
 
         <constructor-arg value="silver" index="0" type="java.lang.String"/>
         <constructor-arg value="2005" index="1" type="int"/>
