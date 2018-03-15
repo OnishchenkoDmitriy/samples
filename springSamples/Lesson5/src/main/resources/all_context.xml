@@ -5,4 +5,7 @@
 
     <import resource="t1000_context.xml"/>
 
+    <bean id="t1000Conveyor" class="org.training.impl.conveyor.T1000Conveyor">
+        <lookup-method name="createRobot" bean="t1000"/>
+    </bean>
 </beans>
