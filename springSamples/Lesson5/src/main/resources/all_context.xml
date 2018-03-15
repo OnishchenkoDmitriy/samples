@@ -8,4 +8,21 @@
     <bean id="t1000Conveyor" class="org.training.impl.conveyor.T1000Conveyor">
         <lookup-method name="createRobot" bean="t1000"/>
     </bean>
+
+    <bean id="t1000Pool" class="org.training.impl.pool.T1000Pool">
+        <constructor-arg name="robotCollection">
+            <map>
+                <entry key="2005" value-ref="t1000"/>
+                <entry key="2006" value-ref="t1000"/>
+                <entry key="2007">
+                    <bean class="org.training.impl.robot.ModelT1000"
+                          parent="baseModel">
+                        <constructor-arg value="gold" index="3" type="java.lang.String"/>
+                        <constructor-arg value="2007" index="4" type="int"/>
+                        <constructor-arg value="false" index="5" type="boolean"/>
+                    </bean>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
 </beans>

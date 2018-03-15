@@ -3,7 +3,6 @@ package org.training.impl.robot;
 import org.training.interfaces.Hand;
 import org.training.interfaces.Head;
 import org.training.interfaces.Leg;
-import org.training.interfaces.Robot;
 
 public class ModelT1000 extends BaseModel{
 

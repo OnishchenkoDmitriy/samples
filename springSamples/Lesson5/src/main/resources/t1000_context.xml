@@ -23,8 +23,6 @@
         <constructor-arg ref="sonyHand"/>
         <constructor-arg ref="sonyLeg"/>
         <constructor-arg ref="sonyHead"/>
-
-        <property name="hand" ref="toshibaHand"/>
     </bean>
 
 </beans>
