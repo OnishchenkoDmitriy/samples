@@ -9,13 +9,12 @@ public class RobotConstructor {
 	
 	public static void main(String[] args){
 
-		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("all_context.xml");
 
-		Object object = context.getBean("t1000Empty");
-		if(object instanceof ModelT1000){
-			ModelT1000 t1000 = (ModelT1000) object;
-			t1000.action();
-		}
+		ModelT1000 t1000 = (ModelT1000) context.getBean("t1000");
+		System.out.println(t1000.getHand());
+		t1000 = (ModelT1000) context.getBean("t1000");
+		System.out.println(t1000.getHand());
 	}
 
 }

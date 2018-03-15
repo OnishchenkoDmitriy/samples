@@ -1,5 +1,9 @@
 package org.training.impl.robot;
 
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.training.interfaces.Hand;
 import org.training.interfaces.Head;
 import org.training.interfaces.Leg;
