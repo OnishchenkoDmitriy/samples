@@ -1,13 +1,18 @@
 package org.training.impl.robot;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.training.impl.ColorStyle;
 import org.training.interfaces.Hand;
 import org.training.interfaces.Head;
 import org.training.interfaces.Leg;
 
+@Component
 public class ModelT1000 extends BaseModel{
 
-
-    private String color;
+    private ColorStyle color;
     private int year;
     private boolean soundEnabled;
 
@@ -18,17 +23,29 @@ public class ModelT1000 extends BaseModel{
         super(hand, leg, head);
     }
 
-    public ModelT1000(Hand hand, Leg leg, Head head, String color, int year, boolean soundEnabled) {
+    public ModelT1000(Hand hand, Leg leg, Head head, ColorStyle color, int year, boolean soundEnabled) {
         super(hand, leg, head);
         this.color = color;
         this.year = year;
         this.soundEnabled = soundEnabled;
     }
 
-    public ModelT1000(String color, int year, boolean soundEnabled) {
+    public ModelT1000(ColorStyle color, int year, boolean soundEnabled) {
         this.color = color;
         this.year = year;
         this.soundEnabled = soundEnabled;
+    }
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public ModelT1000 model_1(){
+        return new ModelT1000();
+    }
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public ModelT1000 model_2(){
+        return new ModelT1000(ColorStyle.BLACK, 2005, true);
     }
 
     public void action() {
@@ -41,11 +58,11 @@ public class ModelT1000 extends BaseModel{
 
     }
 
-    public String getColor() {
+    public ColorStyle getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(ColorStyle color) {
         this.color = color;
     }
 
