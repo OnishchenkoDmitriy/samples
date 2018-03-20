@@ -29,7 +29,7 @@ public class MyLogger {
 		}
 
 		try {
-			output = joinpoint.proceed(new Object[] { "c:\\eclipse" });
+			output = joinpoint.proceed(new Object[] { "c:\\Program Files" });
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
