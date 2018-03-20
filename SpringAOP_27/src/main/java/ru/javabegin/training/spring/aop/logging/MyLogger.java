@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class MyLogger {
 
-	@Pointcut("execution(* *(..))")
+	@Pointcut("execution(* ru.javabegin.training.spring.aop.objects.Manager.*(..))")
 	private void allMethods() {
 	};
 
-	@Around("allMethods() && @annotation(ru.javabegin.training.spring.aop.annotations.ShowTime)")
+	@Around("allMethods() && execution(java.util.Map *(..))")
 	public Object watchTime(ProceedingJoinPoint joinpoint) {
 		long start = System.currentTimeMillis();
 		System.out.println("method begin: " + joinpoint.getSignature().toShortString() + " >>");
@@ -41,28 +41,31 @@ public class MyLogger {
 		return output;
 	}
 
-	@AfterReturning(pointcut = "allMethods() && @annotation(ru.javabegin.training.spring.aop.annotations.ShowResult)",
-			returning = "obj")
-	public void print(Object obj) {
+	@SuppressWarnings("rawtypes")
+	@AfterReturning(pointcut = "execution(java.util.Map *(..))", returning = "object")
+	public void printMap(Object object){
+		System.out.println("Printing Map >> ");
 
-		System.out.println("Print info begin >>");
-
-		if (obj instanceof Set) {
-			Set set = (Set) obj;
-			for (Object object : set) {
-				System.out.println(object);
-			}
-
-		} else if (obj instanceof Map) {
-			Map map = (Map) obj;
-			for (Object object : map.keySet()) {
-				System.out.println("key=" + object + ", " + map.get(object));
-			}
+		Map map = (Map) object;
+		for (Object obj : map.keySet()) {
+			System.out.println("key = " + obj + ", " + map.get(obj));
 		}
 
-		System.out.println("Print info end <<");
+		System.out.println("End printing Map <<");
 		System.out.println();
-
 	}
 
+	@SuppressWarnings("rawtypes")
+	@AfterReturning(pointcut = "execution(java.util.Set *(..))", returning = "object")
+	public void printSet(Object object){
+		System.out.println("Printing Set >> ");
+
+		Set set = (Set) object;
+		for (Object obj : set) {
+			System.out.println(obj);
+		}
+
+		System.out.println("End printing Set <<");
+		System.out.println();
+	}
 }

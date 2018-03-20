@@ -12,8 +12,9 @@ import ru.javabegin.training.spring.aop.annotations.ShowResult;
 import ru.javabegin.training.spring.aop.annotations.ShowTime;
 
 @Component
-public class FileManager {
+public class FileManager implements Manager {
 
+	@Override
 	@ShowTime
 	@ShowResult
 	public Set<String> getExtensionList(String folder) {
@@ -35,6 +36,7 @@ public class FileManager {
 
 	}
 
+	@Override
 	@ShowResult
 	public Map<String, Integer> getExtensionCount(String folder) {
 
