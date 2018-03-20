@@ -46,7 +46,6 @@
 		</property>
 	</bean>
 
-
 	<bean id="itemList" class="java.util.ArrayList">
 		<constructor-arg>
 			<list>
@@ -56,8 +55,6 @@
 			</list>
 		</constructor-arg>
 	</bean>
-
-
 
 	<bean id="buttonPanel" class="todo.ui.BoxLayoutPanel" init-method="init">
 		<property name="axis">
@@ -71,11 +68,6 @@
 		</property>
 	</bean>
 
-
-
-
-
-
 	<bean id="deleteButton" class="todo.ui.button.ActionListenerButton"
 		init-method="init">
 		<property name="actionListener">
@@ -86,7 +78,6 @@
 		</property>
 	</bean>
 
-
 	<bean id="deleteButtonActionListener" class="todo.ui.button.DeleteButtonActionListener">
 		<property name="list">
 			<ref bean="itemList" />
@@ -95,9 +86,6 @@
 			<ref bean="itemTable" />
 		</property>
 	</bean>
-
-
-
 
 	<bean id="addNewButton" class="todo.ui.button.ActionListenerButton"
 		init-method="init">
@@ -108,7 +96,6 @@
 			<value>Add New</value>
 		</property>
 	</bean>
-
 
 	<bean id="addNewButtonActionListener" class="todo.ui.button.AddNewButtonActionListener">
 		<property name="list">
