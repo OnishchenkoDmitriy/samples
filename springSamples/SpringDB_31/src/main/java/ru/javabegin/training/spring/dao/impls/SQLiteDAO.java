@@ -2,10 +2,12 @@ package ru.javabegin.training.spring.dao.impls;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import ru.javabegin.training.spring.dao.interfaces.MP3Dao;
 import ru.javabegin.training.spring.dao.objects.MP3;
@@ -19,20 +21,24 @@ import java.util.TreeMap;
 @Component("sqliteDao")
 public class SQLiteDAO implements MP3Dao {
 
-    private JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
     public void setDataSource(DataSource dataSource){
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
-    public void insert(MP3 mp3) {
+    public int insert(MP3 mp3) {
         String sql = "insert into mp3 (name, author) VALUES (:name, :author)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", mp3.getName());
         params.addValue("author", mp3.getAuthor());
-        jdbcTemplate.update(sql, params);
+
+        jdbcTemplate.update(sql, params, keyHolder);
+        return keyHolder.getKey().intValue();
     }
 
     @Override
@@ -58,7 +64,7 @@ public class SQLiteDAO implements MP3Dao {
         String sql = "select * from mp3 where id=:id";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
-        return jdbcTemplate.queryForObject(sql, new MP3RowMapper(), params);
+        return jdbcTemplate.queryForObject(sql, params, new MP3RowMapper());
     }
 
     @Override
@@ -66,7 +72,7 @@ public class SQLiteDAO implements MP3Dao {
         String sql = "select * from mp3 where upper(name) like :name";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", "%" + name.toUpperCase() + "%");
-        return jdbcTemplate.query(sql, new MP3RowMapper(), params);
+        return jdbcTemplate.query(sql, params, new MP3RowMapper());
     }
 
     @Override
@@ -74,13 +80,13 @@ public class SQLiteDAO implements MP3Dao {
         String sql = "select * from mp3 where upper(author) like :author";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("author", "%" + author.toUpperCase() + "%");
-        return jdbcTemplate.query(sql, new MP3RowMapper(), params);
+        return jdbcTemplate.query(sql, params, new MP3RowMapper());
     }
 
     @Override
     public int getMp3Count(){
         String sql = "select count(*) from mp3";
-        return jdbcTemplate.queryForObject(sql, Integer.class);
+        return jdbcTemplate.getJdbcOperations().queryForObject(sql, Integer.class);
     }
 
     @Override
