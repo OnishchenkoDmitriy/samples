@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="talkService" class="org.training.service.impl.SimpleTalkService">
+        <constructor-arg ref="talkRepo"/>
+    </bean>
+
+    <bean name="speakerFactory" class="org.training.service.SpeakerFactory"/>
+
+    <bean name="speaker" factory-bean="speakerFactory" factory-method="createSpeaker">
+        <constructor-arg value="Dmytro"/>
+        <constructor-arg value="Onyshchenko"/>
+    </bean>
+
+</beans>
