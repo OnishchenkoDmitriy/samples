@@ -6,8 +6,9 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 import ru.javabegin.training.spring.dao.interfaces.MP3Dao;
 import ru.javabegin.training.spring.dao.objects.MP3;
@@ -21,31 +22,30 @@ import java.util.TreeMap;
 @Component("sqliteDao")
 public class SQLiteDAO implements MP3Dao {
 
+    private SimpleJdbcInsert insertMP3;
     private NamedParameterJdbcTemplate jdbcTemplate;
+    private DataSource dataSource;
 
     @Autowired
     public void setDataSource(DataSource dataSource){
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.insertMP3 = new SimpleJdbcInsert(dataSource).withTableName("mp3").usingColumns("name", "author");
+        this.dataSource = dataSource;
     }
 
     @Override
     public int insert(MP3 mp3) {
-        String sql = "insert into mp3 (name, author) VALUES (:name, :author)";
-
-        KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", mp3.getName());
         params.addValue("author", mp3.getAuthor());
-
-        jdbcTemplate.update(sql, params, keyHolder);
-        return keyHolder.getKey().intValue();
+        return insertMP3.execute(params);
     }
 
     @Override
-    public void insert(List<MP3> mp3List) {
-        for (MP3 mp3: mp3List) {
-            insert(mp3);
-        }
+    public int insertList(List<MP3> mp3List){
+        String sql = "insert into mp3 (name, author) VALUES (:name, :author)";
+        SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(mp3List.toArray());
+        return jdbcTemplate.batchUpdate(sql, batch).length;
     }
 
     private void delete(int id) {
