@@ -15,8 +15,11 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import org.springframework.transaction.annotation.Transactional;
 import ru.javabegin.training.spring.dao.interfaces.MP3Dao;
 import ru.javabegin.training.spring.dao.objects.Author;
 import ru.javabegin.training.spring.dao.objects.MP3;
@@ -38,42 +41,40 @@ public class SQLiteDAO implements MP3Dao {
 	}
 
 	@Override
+	@Transactional
 	public int insert(MP3 mp3) {
 
+		String sqlInsertAuthor = "insert into author (name) VALUES (:authorName)";
+		Author author = mp3.getAuthor();
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("name", mp3.getName());
-		params.addValue("author", mp3.getAuthor());
+		params.addValue("authorName", author.getName());
 
-		return insertMP3.execute(params);
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(sqlInsertAuthor, params, keyHolder);
+		int author_id = keyHolder.getKey().intValue();
+
+		String sqlInsertMP3 = "insert into mp3 (author_id, name) VALUES (:author_id, :mp3Name)";
+		params = new MapSqlParameterSource();
+		params.addValue("name", mp3.getName());
+		params.addValue("authorId", author_id);
+
+		return jdbcTemplate.update(sqlInsertMP3, params);
 
 	}
 
 	@Override
 	public int insertList(List<MP3> listMP3) {
-		String sql = "insert into mp3 (name, author) VALUES (:author, :name)";
-
-		SqlParameterSource[] params = new SqlParameterSource[listMP3.size()];
-
 		int i = 0;
-
 		for (MP3 mp3 : listMP3) {
-			MapSqlParameterSource p = new MapSqlParameterSource();
-			p.addValue("name", mp3.getName());
-			p.addValue("author", mp3.getAuthor());
-
-			params[i] = p;
+			insert(mp3);
 			i++;
 		}
-
-		// SqlParameterSource[] batch =
-		// SqlParameterSourceUtils.createBatch(listMP3.toArray());
-		int[] updateCounts = jdbcTemplate.batchUpdate(sql, params);
-		return updateCounts.length;
+		return i;
 	}
 
 	@Override
 	public Map<String, Integer> getStat() {
-		String sql = "select author_name, count(*) as count from " + mp3View + " group by author_name";
+		String sql = "select author_name, count(*) from " + mp3View + " group by author_name";
 
 		return jdbcTemplate.query(sql, new ResultSetExtractor<Map<String, Integer>>() {
 
