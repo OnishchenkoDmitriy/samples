@@ -1,6 +1,6 @@
-package simUDuck_strategyPatternExample.behavior.quack.impl;
+package simUDuck_strategy_pattern.behavior.quack.impl;
 
-import simUDuck_strategyPatternExample.behavior.quack.QuackBehavior;
+import simUDuck_strategy_pattern.behavior.quack.QuackBehavior;
 
 public class MuteQuack implements QuackBehavior {
     public void quack() {

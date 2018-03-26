@@ -1,6 +1,6 @@
-package simUDuck_strategyPatternExample.behavior.fly.impl;
+package simUDuck_strategy_pattern.behavior.fly.impl;
 
-import simUDuck_strategyPatternExample.behavior.fly.FlyBehavior;
+import simUDuck_strategy_pattern.behavior.fly.FlyBehavior;
 
 public class FlyWithWings implements FlyBehavior {
     public void fly() {

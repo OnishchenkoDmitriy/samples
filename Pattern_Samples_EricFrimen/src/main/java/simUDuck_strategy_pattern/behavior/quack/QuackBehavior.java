@@ -1,4 +1,4 @@
-package simUDuck_strategyPatternExample.behavior.quack;
+package simUDuck_strategy_pattern.behavior.quack;
 
 public interface QuackBehavior {
 

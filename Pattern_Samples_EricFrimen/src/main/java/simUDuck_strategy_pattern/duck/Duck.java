@@ -1,7 +1,7 @@
-package simUDuck_strategyPatternExample.duck;
+package simUDuck_strategy_pattern.duck;
 
-import simUDuck_strategyPatternExample.behavior.fly.FlyBehavior;
-import simUDuck_strategyPatternExample.behavior.quack.QuackBehavior;
+import simUDuck_strategy_pattern.behavior.fly.FlyBehavior;
+import simUDuck_strategy_pattern.behavior.quack.QuackBehavior;
 
 public abstract class Duck {
 

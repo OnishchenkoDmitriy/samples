@@ -1,9 +1,9 @@
-package simUDuck_strategyPatternExample;
+package simUDuck_strategy_pattern;
 
-import simUDuck_strategyPatternExample.duck.Duck;
-import simUDuck_strategyPatternExample.duck.MallardDuck;
-import simUDuck_strategyPatternExample.duck.ModelDuck;
-import simUDuck_strategyPatternExample.behavior.fly.impl.FlyRocketPowered;
+import simUDuck_strategy_pattern.duck.Duck;
+import simUDuck_strategy_pattern.duck.MallardDuck;
+import simUDuck_strategy_pattern.duck.ModelDuck;
+import simUDuck_strategy_pattern.behavior.fly.impl.FlyRocketPowered;
 
 public class MiniDuckSimulation {
 
