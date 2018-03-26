@@ -1,11 +1,13 @@
 package org.training.repository.impl;
 
+import org.springframework.stereotype.Repository;
 import org.training.domain.Talk;
 import org.training.repository.TalkRepo;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class InMemoryTalkRepo implements TalkRepo {
 
     private List<Talk> talks;
@@ -20,11 +22,11 @@ public class InMemoryTalkRepo implements TalkRepo {
         talks.add(talk);
     }
 
-    private void init() {
+    public void init() {
         talks = new ArrayList<>();
     }
 
-    private void close() {
+    public void close() {
         System.out.println("Close");
     }
 }

@@ -8,4 +8,8 @@ public interface TalkRepo {
     List<Talk> getTalks();
 
     void save(Talk talk);
+
+    void close();
+
+    void init();
 }

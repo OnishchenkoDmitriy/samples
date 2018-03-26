@@ -1,13 +1,21 @@
 package org.training.domain;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Scope("prototype")
+@Component
 public class Talk {
 
     private String title;
     private String summary;
     private Set<Speaker> speakers;
+
+    public Talk() {
+    }
 
     public Talk(String title, String summary) {
         this.title = title;
